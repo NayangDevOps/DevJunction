@@ -1,0 +1,24 @@
+name: 🚀 Deploy to InfinityFree via FTP
+
+on:
+  push:
+    branches:
+      - master   # change if your branch is named differently
+
+jobs:
+  ftp-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftp
+          local-dir: ./          # folder in repo to upload (./ = everything)
+          server-dir: /htdocs/   # InfinityFree root (confirm in panel)
